@@ -1,0 +1,86 @@
+---
+title: "Pitch Clustering Example"
+author: "Ronald Michaels"
+date: "11/6/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Import Libraries
+```{r} 
+# library needed to unscale clustering centers
+library(DMwR)
+# library needed for clustering plots
+library(factoextra) 
+```
+
+
+Load Dataset
+```{r}
+# read in csv file
+pitch_data = 
+  read.csv("Pitch_Clustering_Practice.csv")
+# scale values for clustering
+pitch_data_scale = scale(pitch_data[,2:9])
+# create dataframe
+pitch_data_df = as.data.frame(pitch_data_scale)
+# alter row title for clustering 
+row.names(pitch_data_df) = pitch_data[,1]
+# display head of scaled dataframe
+head(pitch_data_df)
+
+```
+
+
+Determine Optimal Number of Clusters
+```{r}
+# Use Elbow Method
+fviz_nbclust(pitch_data_df, kmeans, method = "wss")
+```
+
+Perform Cluster Analysis With 3 Centers
+```{r}
+clustering = kmeans(pitch_data_df, centers = 3, nstart = 25)
+# unscale centers to view pitch information
+result = unscale(as.matrix(clustering$centers), as.matrix(pitch_data_scale))
+# display centers
+result
+# graph of clusters
+fviz_cluster(clustering, data = pitch_data_df, main = "Plot of Pitching Clusters")
+```
+
+Assign Cluster Values as Final Column 
+```{r}
+# create final column
+pitch_data$Pitch_Name = clustering$cluster
+# change to character values
+pitch_data$Pitch_Name = as.character(pitch_data$Pitch_Name)
+# assign pitch name to cluster value
+for (i in 1:nrow(pitch_data)) {
+  if (pitch_data$Pitch_Name[i] == "1"){
+    pitch_data$Pitch_Name[i][pitch_data$Pitch_Name[i] == "1"] = "Changeup"
+  }
+  else if (pitch_data$Pitch_Name[i] == "2"){
+   pitch_data$Pitch_Name[i][pitch_data$Pitch_Name[i] == "2"] = "Fastball"
+  }
+  else if (pitch_data$Pitch_Name[i] == "3"){
+    pitch_data$Pitch_Name[i][pitch_data$Pitch_Name[i] == "3"] = "Curveball"
+  }
+}
+# view first 10 rows of dataset
+head(pitch_data,10)
+```
+
+Export Dataset For Tableau Visualizations
+```{r}
+# export as csv
+write.csv(pitch_data,
+          "Pitch_Clustering_Final_Data.csv", 
+          row.names = FALSE)
+```
+
+
+
