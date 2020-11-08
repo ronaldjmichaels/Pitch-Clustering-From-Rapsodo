@@ -8,5 +8,5 @@ The Pitch_Clustering_Example.pdf file is a pdf file displaying not only the code
 
 The Pitch_Clustering_Final_Data.csv file contains the final dataset. This file displays an extra column showing the type of pitch after kmeans clustering was performed.
 
-The Pitch_CLustering_Visuals.pdf file displays visuals generated in Tableau
+The Pitch_Clustering_Visuals.pdf file displays visuals generated in Tableau
 
