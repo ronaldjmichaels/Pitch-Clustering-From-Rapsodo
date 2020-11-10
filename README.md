@@ -4,9 +4,9 @@ The initial dataset, Pitch_Clustering_Practice.csv, details pitch information co
 
 The Pitch_Clustering_Example.Rmd file contains the code run through Rmarkdown for analysis.
 
-The Pitch_Clustering_Example.pdf file is a pdf file displaying not only the code, but also clustering visuals as well. 
-
 The Pitch_Clustering_Final_Data.csv file contains the final dataset. This file displays an extra column showing the type of pitch after kmeans clustering was performed.
 
 The Pitch_Clustering_Visuals.pdf file displays visuals generated in Tableau
+
+The Pitch_Clustering_Analysis.pdf file is a pdf file displaying not only the code and visuals, but also a report on the data. 
 
